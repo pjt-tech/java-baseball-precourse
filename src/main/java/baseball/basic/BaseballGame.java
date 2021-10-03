@@ -134,7 +134,7 @@ public class BaseballGame {
 
     public boolean checkInputNumber(int inputNum) {
         if (!(inputNum == 1 || inputNum == 2)) {
-            choiceFailMsg();
+            System.out.println("[ERROR]1 또는 2를 정확히 입력해주세요!! : ");
             return true;
         }
         if(inputNum == 1) {
@@ -148,10 +148,6 @@ public class BaseballGame {
     private void stopGame() {
         System.out.println("게임을 종료합니다. bye~!");
         System.exit(0);
-    }
-
-    public void choiceFailMsg() {
-        System.out.println("[ERROR]1 또는 2를 정확히 입력해주세요!! : ");
     }
 
     public void choiceNumber() {
