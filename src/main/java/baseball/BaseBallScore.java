@@ -6,6 +6,11 @@ public class BaseBallScore {
     int strike;
     int ball;
 
+    public BaseBallScore(boolean isSuccess, int strike, int ball) {
+        this.isSuccess = isSuccess;
+        this.strike = strike;
+        this.ball = ball;
+    }
 
     public boolean getSuccess() {
         return isSuccess;

@@ -16,20 +16,25 @@ public class BaseballGame {
         this.playerNumArr = playerNumArr;
     }
 
-    public void setComNumArr(int[] comNumArr) {
+    public boolean setComNumArr(int[] comNumArr) {
         for(int i = 0; i < COUNT; i++) {
             comNumArr[i] = Randoms.pickNumberInRange(1,9);
         }
+        return checkComSameNumber(comNumArr);
+    }
+
+    private boolean checkComSameNumber(int[] comNumArr) {
+        return comNumArr[0] == comNumArr[1] || comNumArr[1] == comNumArr[2] || comNumArr[0] == comNumArr[2];
     }
 
     public String setPlayerNum() {
-        System.out.print("숫자를 입력해주세요!! : ");
+        System.out.print("\n숫자를 입력해주세요!! : ");
 
         return Console.readLine();
     }
 
     public boolean startBaseballGame(int[] comNumArr, int[] playerNumArr) {
-        bbs = new BaseBallScore();
+        bbs = new BaseBallScore(false,0,0);
 
         for(int i = 0; i < COUNT; i++) {
             checkSameNumber(comNumArr, playerNumArr, i);
@@ -40,16 +45,18 @@ public class BaseballGame {
     }
 
     public void CheckStrikeCount() {
-        if(bbs.getStrike() == COUNT && bbs.getBall() == 0){
+        if(bbs.getStrike() == COUNT){
             bbs.setSuccess(true);
-            System.out.println("3개의 숫자를 모두 맞히셨습니다. 게임 끝!");
+            System.out.println("\n3개의 숫자를 모두 맞히셨습니다. 게임 끝!");
         }
     }
 
     public void checkSameNumber(int[] comNumArr, int[] playerNumArr, int i) {
+        int ball = bbs.getBall();
 
         for(int j = 0; j < COUNT; j++) {
             if (comNumArr[i] == playerNumArr[j]) {
+                bbs.setBall(++ball);
                 checkSameIdx(i, j);
             }
         }
@@ -58,25 +65,23 @@ public class BaseballGame {
     private void checkSameIdx(int i, int j) {
         int strike = bbs.getStrike();
         int ball = bbs.getBall();
-
-        if (i != j) {
-            bbs.setBall(++ball);
-        } else {
+        if (i == j) {
             bbs.setStrike(++strike);
+            bbs.setBall(--ball);
         }
     }
 
     private void printResult() {
         int strike = bbs.getStrike();
         int ball = bbs.getBall();
-        if(strike > 0 && ball > 0) {
-            System.out.println(strike + "스트라이크 " + ball + "볼");
-        } else if(strike == 0 || ball > 0) {
-            System.out.println(ball + "볼");
-        } else if(strike < 0 || ball == 0) {
-            System.out.println(strike + "스트라이크");
-        } else {
-            System.out.println("낫싱");
+        if(strike != 0) {
+            System.out.print(strike + "스트라이크");
+        }
+        if(ball != 0) {
+            System.out.print(ball + "볼");
+        }
+        if(strike == 0 && ball == 0) {
+            System.out.print("낫싱");
         }
     }
 
@@ -129,24 +134,21 @@ public class BaseballGame {
         return Integer.parseInt(inputStr);
     }
 
-    public boolean checkChoiceQuestion(int inputNum) {
-
-        checkInputNumber(inputNum);
-
-        if(inputNum == 1) {
-            return true;
-        } else if(inputNum == 2) {
-            System.out.print("게임을 종료합니다. bye~!");
+    public boolean checkInputNumber(int inputNum) {
+        if (!(inputNum == 1 || inputNum == 2)) {
             return false;
         }
-        return false;
+        if(inputNum == 1) {
+            System.out.print("새로운 게임 start~!");
+        }
+        if(inputNum == 2) {
+            System.out.println("게임을 종료합니다. bye~!");
+            System.exit(0);
+        }
+        return true;
     }
 
-    public boolean checkInputNumber(int inputNum) {
-        return inputNum == 1 || inputNum == 2;
-    }
-
-    private void choiceFail() {
+    public void choiceFail() {
         System.out.println("[ERROR]1 또는 2를 정확히 입력해주세요!! : ");
         choiceQuestion();
     }
