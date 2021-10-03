@@ -11,7 +11,6 @@ public class Application {
         boolean state = true;  //반복문 while
         boolean gameResult = false; //게임결과 맞았는지 틀렸는지
         boolean isFirst = true; //게임이 새로 시작하는지
-        boolean isSame = false;
         boolean isSelect = true;
         boolean isValidation;
         BaseballGame bbg = null;
@@ -29,8 +28,7 @@ public class Application {
                 bbg.changeType(playerNumArr,inputNum.split(""));
                 gameResult = bbg.startBaseballGame(comNumArr, playerNumArr);
             }
-            if(gameResult) isSelect = bbg.checkInputNumber(bbg.choiceQuestion());
-            if(!isSelect) bbg.choiceFail();
+            if(gameResult) bbg.choiceNumber();
         }
     }
 }

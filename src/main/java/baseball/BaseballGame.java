@@ -16,20 +16,22 @@ public class BaseballGame {
         this.playerNumArr = playerNumArr;
     }
 
-    public boolean setComNumArr(int[] comNumArr) {
+    public void setComNumArr(int[] comNumArr) {
+        boolean loop = true;
+        while (loop) {
+            loop = randomNumberSet(comNumArr);
+        }
+    }
+
+    private boolean randomNumberSet(int[] comNumArr) {
         for(int i = 0; i < COUNT; i++) {
             comNumArr[i] = Randoms.pickNumberInRange(1,9);
         }
-        return checkComSameNumber(comNumArr);
-    }
-
-    private boolean checkComSameNumber(int[] comNumArr) {
         return comNumArr[0] == comNumArr[1] || comNumArr[1] == comNumArr[2] || comNumArr[0] == comNumArr[2];
     }
 
     public String setPlayerNum() {
         System.out.print("\n숫자를 입력해주세요!! : ");
-
         return Console.readLine();
     }
 
@@ -93,8 +95,7 @@ public class BaseballGame {
 
     public boolean checkNumberLength(String[] strArr) {
         if(strArr.length != COUNT) {
-            System.out.println("[ERROR" +
-                    "]3자리의 숫자를 입력해주세요.");
+            System.out.print("[ERROR]3자리의 숫자를 입력해주세요.");
             return false;
         }
         return true;
@@ -110,7 +111,7 @@ public class BaseballGame {
     public boolean checkCharIsNumber(String inputNum) {
         boolean charDigitResult = inValidation(inputNum);
         if(!charDigitResult) {
-            System.out.println("[ERROR]숫자만 입력해주세요.");
+            System.out.print("[ERROR]숫자만 입력해주세요.");
         }
         return charDigitResult;
     }
@@ -148,8 +149,11 @@ public class BaseballGame {
         return true;
     }
 
-    public void choiceFail() {
-        System.out.println("[ERROR]1 또는 2를 정확히 입력해주세요!! : ");
-        choiceQuestion();
+    public void choiceNumber() {
+        boolean loop = true;
+        while (loop) {
+            loop = checkInputNumber(choiceQuestion());
+            System.out.print("[ERROR]1 또는 2를 정확히 입력해주세요!! : ");
+        }
     }
 }
