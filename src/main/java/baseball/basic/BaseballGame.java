@@ -1,5 +1,6 @@
-package baseball;
+package baseball.basic;
 
+import baseball.BaseBallScore;
 import nextstep.utils.Console;
 import nextstep.utils.Randoms;
 
@@ -76,15 +77,11 @@ public class BaseballGame {
     private void printResult() {
         int strike = bbs.getStrike();
         int ball = bbs.getBall();
-        if(strike != 0) {
-            System.out.print(strike + "스트라이크");
-        }
-        if(ball != 0) {
-            System.out.print(ball + "볼");
-        }
-        if(strike == 0 && ball == 0) {
-            System.out.print("낫싱");
-        }
+        if(strike != 0) System.out.print(strike + "스트라이크");
+
+        if(ball != 0) System.out.print(ball + "볼");
+
+        if(strike == 0 && ball == 0) System.out.print("낫싱");
     }
 
     public void changeType(int[] playerNumArr, String[] strArr) {
