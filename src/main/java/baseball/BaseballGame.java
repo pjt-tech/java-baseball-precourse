@@ -137,23 +137,30 @@ public class BaseballGame {
 
     public boolean checkInputNumber(int inputNum) {
         if (!(inputNum == 1 || inputNum == 2)) {
-            return false;
+            choiceFailMsg();
+            return true;
         }
         if(inputNum == 1) {
             System.out.print("새로운 게임 start~!");
+            return false;
         }
-        if(inputNum == 2) {
-            System.out.println("게임을 종료합니다. bye~!");
-            System.exit(0);
-        }
-        return true;
+        stopGame();
+        return false;
+    }
+
+    private void stopGame() {
+        System.out.println("게임을 종료합니다. bye~!");
+        System.exit(0);
+    }
+
+    public void choiceFailMsg() {
+        System.out.println("[ERROR]1 또는 2를 정확히 입력해주세요!! : ");
     }
 
     public void choiceNumber() {
         boolean loop = true;
         while (loop) {
             loop = checkInputNumber(choiceQuestion());
-            System.out.print("[ERROR]1 또는 2를 정확히 입력해주세요!! : ");
         }
     }
 }
